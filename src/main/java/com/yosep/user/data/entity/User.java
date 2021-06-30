@@ -1,17 +1,21 @@
 package com.yosep.user.data.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Table(name = "yos_user")
-public class UserEntity extends BaseEntity{
+public class User extends BaseEntity {
     @Id
     @Column(length = 30)
-    private String userName;
+    private String userId;
 
     @Column(length = 100, nullable = false)
     private String password;

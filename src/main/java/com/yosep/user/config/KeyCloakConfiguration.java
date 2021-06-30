@@ -45,4 +45,6 @@ public class KeyCloakConfiguration {
                 .clientSecret(CLIENT_SECRET)
                 .build();
     }
+
+
 }

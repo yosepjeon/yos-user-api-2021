@@ -131,39 +131,13 @@ public class KeyCloakTest extends BaseTest {
         newCredential.setTemporary(false);
         userResource.resetPassword(newCredential);
 
+    }
 
-
-
-//        MultiValueMap<String, Object> userInfo = new LinkedMultiValueMap<>();
-//
-//        String userName = "test1";
-//        String password = "test1";
-//
-//        userInfo.add("username",userName);
-//        userInfo.add("enabled","true");
-////        List<CredentialForCreationUser> credentials = new ArrayList<>();
-////        CredentialForCreationUser credential = new CredentialForCreationUser("password",password);
-//        List<MultiValueMap<String, Object>> credentials = new ArrayList<>();
-//        MultiValueMap<String, Object> credential = new LinkedMultiValueMap<>();
-//        credential.add("type", "passowrd");
-//        credential.add("value", password);
-//        credentials.add(credential);
-//        userInfo.add("credentials", credentials);
-//
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-//        httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//        httpHeaders.setBearerAuth(accessToken);
-//
-//        HttpEntity httpEntity = new HttpEntity<>(userInfo, httpHeaders);
-
-//        log.info(httpEntity.toString());
-//        ResponseEntity response = restTemplate.postForEntity("http://localhost:9999/auth/admin/realms/yosep/users", httpEntity, Map.class);
-//        log.info(response.toString());
-
-//        MultiValueMap<String, Object> roleMappingInfo = new LinkedMultiValueMap<>();
-//
-//        String url = "http://localhost:9999/auth/admin/realms/yosep/users/" + userName + "/role-mappings/clients/yos";
-//        roleMappingInfo.add("id","");
+    @Test
+    @DisplayName("[Keycloak] 유저 찾기 성공 테스트")
+    public void 유저_찾기_성공_테스트() {
+        log.info("[Keycloak] 유저 찾기 성공 테스트");
+        List<UserRepresentation> users = keycloak.realm("yosep").users().search("test1");
+        log.info("userId: " + users.get(0).getUsername());
     }
 }

@@ -26,6 +26,12 @@ ext {
 }
 
 dependencies {
+	// MapStruct
+	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
+	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+
 	// Keycloak
 //	implementation 'org.keycloak:keycloak-spring-boot-starter'
 	implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '14.0.0'
