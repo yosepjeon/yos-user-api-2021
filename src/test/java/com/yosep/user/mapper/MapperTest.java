@@ -1,5 +1,6 @@
 package com.yosep.user.mapper;
 
+import com.yosep.user.data.dto.request.UserDtoForCreation;
 import com.yosep.user.data.dto.response.CreatedUserDto;
 import com.yosep.user.data.entity.User;
 import com.yosep.user.data.mapper.UserMapper;
@@ -81,7 +82,7 @@ public class MapperTest {
     @DisplayName("[MapStruct] UserDtoForCreation에서 User로 변환 테스트")
     public void userDtoForCreation에서_user로_변환_테스트() {
         log.info("[MapStruct] UserDtoForCreation에서 User로 변환 테스트");
-        User user = User.builder()
+        UserDtoForCreation userDtoForCreation = UserDtoForCreation.builder()
                 .userId("test2")
                 .name("test1")
                 .password("test1")
@@ -93,6 +94,8 @@ public class MapperTest {
                 .extraAddr("test")
                 .jibunAddr("test")
                 .build();
+
+        User user = UserMapper.INSTANCE.userDtoForCreationToUser(userDtoForCreation);
 
         User createdUser = userRepository.save(user);
 

@@ -12,11 +12,10 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/yos-user-api/user")
+@RequestMapping(value = "/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-//    private final
 
     @GetMapping(value = "/test")
     public String test() {
@@ -33,8 +32,6 @@ public class UserController {
         if(errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
-
-
 
         return null;
     }
