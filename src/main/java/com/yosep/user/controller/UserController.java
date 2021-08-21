@@ -18,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "/test")
-    public String test() {
-        return "test";
+    public ResponseEntity test() {
+        return ResponseEntity.ok("test");
     }
 
     @GetMapping

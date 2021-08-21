@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
@@ -55,11 +56,12 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("[UserService] 유저 생성 성공 테스트")
-    public void 유저_생성_성공_테스트() {
+    public void 유저_생성_성공_테스트() throws ExecutionException, InterruptedException {
         log.info("[UserService] 유저 생성 성공 테스트");
 
         UserDtoForCreation userDtoForCreation = UserDtoForCreation.builder()
                 .userId(userId)
+//                .userId("user-admin-for-test")
                 .name("test1")
                 .password("test1")
                 .email("test1@test.com")
@@ -81,6 +83,9 @@ public class UserServiceTest {
 
         User selectedUser = optionalUser.get();
         Assertions.assertEquals(userDtoForCreation.getUserId(), selectedUser.getUserId());
+
+        keycloak.realm("yosep").users().delete(keycloak.realm("yosep").users().search(userId).get(0).getId());
+        userToProductProducer.produceCartDeletion(userId);
     }
 
     @Test

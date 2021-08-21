@@ -5,6 +5,7 @@ import com.yosep.user.data.dto.request.UserDtoForCreation;
 import com.yosep.user.data.dto.response.CreatedUserDto;
 import com.yosep.user.data.entity.User;
 import com.yosep.user.data.mapper.UserMapper;
+import com.yosep.user.mq.producer.UserToProductProducer;
 import com.yosep.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,13 +25,14 @@ import java.util.Arrays;
 public class UserService {
     private final UserRepository userRepository;
     private final Keycloak keycloak;
+    private final UserToProductProducer userToProductProducer;
 
     public boolean checkDuplicatedUser(String userId) {
         return userRepository.findById(userId).isPresent() ? true : false;
     }
 
     @Transactional(readOnly = false)
-    public Boolean createUser(UserDtoForCreation userDtoForCreation) {
+    public Boolean createUser(UserDtoForCreation userDtoForCreation) throws ExecutionException, InterruptedException {
         User user = UserMapper.INSTANCE.userDtoForCreationToUser(userDtoForCreation);
 
         if(userRepository.findById(user.getUserId()).isPresent()) {
@@ -58,6 +61,8 @@ public class UserService {
         newCredential.setValue(createdUser.getPassword());
         newCredential.setTemporary(false);
         userResource.resetPassword(newCredential);
+
+        userToProductProducer.produceCartCreation(user.getUserId());
 
         return true;
     }

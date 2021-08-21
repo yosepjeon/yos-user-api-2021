@@ -148,8 +148,8 @@ public class KeyCloakTest extends BaseTest {
     @DisplayName("[Keycloak] 유저 찾기 성공 테스트")
     public void 유저_찾기_성공_테스트() {
         log.info("[Keycloak] 유저 찾기 성공 테스트");
-        List<UserRepresentation> users = keycloak.realm("yosep").users().search("admin");
-        log.info("userId: " + users.get(0).getUsername());
+//        List<UserRepresentation> users = keycloak.realm("yosep").users().search("user-creation-test1");
+//        log.info("userId: " + users.get(0).getUsername());
     }
 
     @Test
@@ -157,7 +157,7 @@ public class KeyCloakTest extends BaseTest {
     public void 유저_삭제_성공_테스트() {
         log.info("[Keycloak] 유저 삭제 성공 테스트");
 
-//        Response response = keycloak.realm("yosep").users().delete(keycloak.realm("yosep").users().search("test2").get(0).getId());
+//        Response response = keycloak.realm("yosep").users().delete(keycloak.realm("yosep").users().search("user-creation-test1").get(0).getId());
 //        System.out.println(response.getStatus());
     }
 }
