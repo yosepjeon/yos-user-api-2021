@@ -32,10 +32,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = false)
-    public Boolean createUser(UserDtoForCreation userDtoForCreation) throws ExecutionException, InterruptedException {
+    public Boolean createUser(UserDtoForCreation userDtoForCreation)
+            throws ExecutionException, InterruptedException {
         User user = UserMapper.INSTANCE.userDtoForCreationToUser(userDtoForCreation);
 
-        if(userRepository.findById(user.getUserId()).isPresent()) {
+        if (userRepository.findById(user.getUserId()).isPresent()) {
 
             return false;
         }
@@ -50,7 +51,11 @@ public class UserService {
         UserRepresentation keycloakUser = new UserRepresentation();
         keycloakUser.setUsername(createdUserDto.getUserId());
         keycloakUser.setCredentials(Arrays.asList(credential));
-        javax.ws.rs.core.Response response = keycloak.realm("yosep").users().create(keycloakUser);
+
+        javax.ws.rs.core.Response response = keycloak
+                .realm("yosep")
+                .users()
+                .create(keycloakUser);
         final int status = response.getStatus();
 
         final String createdId = KeyCloakUtil.getCreatedId(response);
